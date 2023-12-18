@@ -1,47 +1,60 @@
-import { Button, Checkbox, Form, Input, Typography } from 'antd'
-import styles from 'pages/Auth/Auth.module.scss'
+import { Button, Checkbox, Form, Input, Typography } from "antd";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { LoginForm } from "./Login.types";
+import styles from "pages/Auth/Auth.module.scss";
 
 const Login: React.FC = () => {
+  const { handleSubmit, control } = useForm<LoginForm>({
+    defaultValues: { email: "", password: "", remember: false },
+  });
+
+  const submit: SubmitHandler<LoginForm> = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className={styles.page}>
-      <Form
-        className={styles.form}
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
-      >
+      <Form className={styles.form} onFinish={handleSubmit(submit)}>
         <Typography.Title level={2}>Вход</Typography.Title>
 
-        <Form.Item
-          label="Почта"
-          name="mail"
-          rules={[{ required: true, message: 'Введите почту!' }]}
-        >
-          <Input />
-        </Form.Item>
+        <Controller
+          name="email"
+          control={control}
+          render={({ field }) => (
+            <Form.Item label="Почта" required>
+              <Input {...field} />
+            </Form.Item>
+          )}
+        />
 
-        <Form.Item
-          label="Пароль"
+        <Controller
           name="password"
-          rules={[{ required: true, message: 'Введите пароль!' }]}
-        >
-          <Input.Password />
-        </Form.Item>
+          control={control}
+          render={({ field }) => (
+            <Form.Item label="Пароль" required>
+              <Input.Password {...field} />
+            </Form.Item>
+          )}
+        />
 
-        <Form.Item name="remember">
-          <Checkbox>Запомнить меня</Checkbox>
-        </Form.Item>
+        <Controller
+          name="remember"
+          control={control}
+          render={({ field }) => (
+            <Checkbox checked={field.value} {...field}>
+              Запомнить меня
+            </Checkbox>
+          )}
+        />
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button className="text-black" type="primary" htmlType="submit">
-            Войти
-          </Button>
-        </Form.Item>
+        <Button className="text-black" htmlType="submit">
+          Войти
+        </Button>
+
         <Button>Регистрация</Button>
       </Form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

@@ -6,6 +6,9 @@
 }
 
 .form {
+  max-width: 500px;
+  width: 100%;
+  min-height: 400px;
   padding: 40px;
   text-align: center;
   @apply bg-indigo-500 rounded-3xl;
