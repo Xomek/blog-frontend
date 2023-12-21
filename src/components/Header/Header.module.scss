@@ -1,0 +1,9 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0px 40px;
+  @apply bg-indigo-400;
+  @apply shadow-lg;
+}
